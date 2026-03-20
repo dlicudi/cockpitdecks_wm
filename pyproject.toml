@@ -46,7 +46,7 @@ classifiers = [
 requires-python = ">=3.10"
 
 dependencies = [
-    "cockpitdecks @ git+https://github.com/devleaks/cockpitdecks.git",
+    "cockpitdecks @ git+https://github.com/dlicudi/cockpitdecks.git",
     "pillow~=12.0",
     "ruamel.yaml>=0.19.1,<0.20",
     "avwx-engine~=1.9.0",
