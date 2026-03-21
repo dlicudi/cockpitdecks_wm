@@ -5,6 +5,7 @@ A METAR is a weather situation at a named location, usually an airport.
 import logging
 import re
 from datetime import datetime, timedelta, timezone
+from typing import Any
 
 import requests
 import requests_cache
