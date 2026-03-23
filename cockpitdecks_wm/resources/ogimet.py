@@ -20,7 +20,10 @@ from cockpitdecks.resources.weather import WeatherData
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-requests_cache.install_cache("ogimet_cache")
+# IMPORTANT:
+# Do NOT call requests_cache.install_cache() globally here.
+# It monkeypatches requests process-wide and can affect xpwebapi metadata fetches.
+_OGIMET_SESSION = requests_cache.CachedSession("ogimet_cache")
 
 
 def round_dt(dt, delta):  # rounds date to delta after date.
@@ -126,7 +129,7 @@ class WeatherOGIMET(WeatherData):
         url = url + moment_normalized.strftime("&ano=%Y&mes=%m&day=%d&hora=%H&anof=%Y&mesf=%m&dayf=%d&horaf=%H&minf=59&send=send")
         logger.debug(f"url={url}")
         try:
-            response = requests.get(url, cookies={"cookieconsent_status": "dismiss"})
+            response = _OGIMET_SESSION.get(url, cookies={"cookieconsent_status": "dismiss"})
             text = response.text
             logger.debug(f"response: {text}")
         except:
